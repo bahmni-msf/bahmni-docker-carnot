@@ -29,14 +29,6 @@ services:
     environment:
       TZ: ${TZ}
 
-  # ECR-style deployment pattern (amman-config/malawi-config)
-  # bahmni-config:
-  #   image: ${ECR_URL}/bahmni-msf-lite/carnot-config:${CONFIG_IMAGE_TAG:?}
-  #   restart: always
-  #   volumes:
-  #     - '${CONFIG_VOLUME:?}:/usr/local/bahmni_config'
-  #   logging: *log-config
-
   bahmni-config:
     image: 'carnot-config:${CONFIG_IMAGE_TAG:?}'
     volumes:
