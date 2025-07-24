@@ -1,0 +1,263 @@
+{
+  "jobs": [
+    {
+      "name": "Programs",
+      "type": "programs",
+      "locale": "fr",
+      "chunkSizeToRead": "500"
+    },
+    {
+      "name": "Patients",
+      "type": "patients",
+      "locale": "fr",
+      "chunkSizeToRead": "500"
+    },
+    {
+      "name": "Appointments",
+      "type": "appointments",
+      "locale": "fr",
+      "chunkSizeToRead": "500",
+      "groupedJobConfigs": [
+        {
+          "tableName": "appointment_service_default",
+          "columnsToIgnore": [
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Bed Management",
+      "type": "bedManagement",
+      "locale": "fr",
+      "chunkSizeToRead": "500"
+    },
+    {
+      "name": "Location",
+      "type": "location",
+      "locale": "fr",
+      "chunkSizeToRead": "500"
+    },
+    {
+      "name": "Operation Theater",
+      "type": "operationTheater",
+      "locale": "fr",
+      "chunkSizeToRead": "500"
+    },
+    {
+      "name": "Person",
+      "type": "person",
+      "locale": "fr",
+      "chunkSizeToRead": "500",
+      "groupedJobConfigs": [
+        {
+          "tableName": "person_attributes",
+          "columnsToIgnore": [
+            "familyNameLocal",
+            "givenNameLocal",
+            "middleNameLocal",
+            "patientAddress",
+            "patientAddressLine2",
+            "patientPhoneNumber1",
+            "patientPhoneNumber2",
+            "secondaryContactName",
+            "secondaryContactPhoneNumber"
+          ]
+        },
+        {
+          "tableName": "person_details_default",
+          "columnsToIgnore": [
+            "prefix",
+            "given_name",
+            "middle_name",
+            "family_name_prefix",
+            "family_name",
+            "family_name2",
+            "family_name_suffix",
+            "birthdate"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Provider",
+      "type": "provider",
+      "chunkSizeToRead": "500"
+    },
+    {
+      "name": "Visits And Encounters",
+      "type": "visitsAndEncounters",
+      "chunkSizeToRead": "500"
+    },
+    {
+      "name": "Medication And Orders",
+      "type": "medicationAndOrders",
+      "locale": "fr",
+      "chunkSizeToRead": "500",
+      "groupedJobConfigs": [
+        {
+          "tableName": "medication_data_default",
+          "columnsToIgnore": [
+            "instructions",
+            "stop_notes"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Diagnoses And Conditions",
+      "type": "diagnosesAndConditions",
+      "locale": "fr",
+      "chunkSizeToRead": "500"
+    },
+    {
+      "name": "Bacteriology Data",
+      "conceptReferenceSource": "",
+      "type": "bacteriology"
+    },
+    {
+      "name": "MetaData Dictionary",
+      "type": "metadata",
+      "locale": "fr",
+      "conceptReferenceSource": ""
+    },
+    {
+      "name": "Obs Data",
+      "type": "obs",
+      "locale": "fr",
+      "incrementalUpdateConfig": {
+        "updateOn": "encounter_id",
+        "eventCategory": "Encounter",
+        "openmrsTableName": "encounter"
+      },
+      "separateTableConfig": {
+        "enableForAddMoreAndMultiSelect": true,
+        "separateTables": [
+        ]
+      },
+      "conceptReferenceSource": "",
+      "ignoreAllFreeTextConcepts": true,
+      "columnsToIgnore": [
+        "Image",
+        "Video"
+      ],
+      "includeFreeTextConceptNames": [
+        "Lieu de transfert"
+     ]
+    },
+    {
+      "name": "Form2 Obs Data",
+      "type": "form2obs",
+      "locale": "fr",
+      "incrementalUpdateConfig": {
+        "updateOn": "encounter_id",
+        "eventCategory": "Encounter",
+        "openmrsTableName": "encounter"
+      },
+      "separateTableConfig": {
+        "enableForAddMoreAndMultiSelect": true,
+        "separateTables": [
+        ]
+      },
+      "conceptReferenceSource": "",
+      "ignoreAllFreeTextConcepts": true,
+      "columnsToIgnore": [
+        "Image"
+      ],
+      "includeFreeTextConceptNames": [
+        "Lieu de transfert"
+     ]
+    },
+    {
+      "name": "Disposition Data",
+      "type": "disposition",
+      "locale": "fr",
+      "columnsToIgnore": [],
+      "incrementalUpdateConfig": {
+        "updateOn": "encounter_id",
+        "eventCategory": "Encounter",
+        "openmrsTableName": "encounter"
+      }
+    }
+  ],
+  "procedures": [
+    {
+      "name": "Discharge Date Procedure",
+      "sourceFilePath": "classpath:procedureSql/dischargeDateProc.sql"
+    },
+    {
+      "name": "Age Group Procedure",
+      "sourceFilePath": "classpath:procedureSql/ageGroupProc.sql"
+    }
+  ],
+  "views": [
+    {
+      "name": "ncd_register",
+              "sourceFilePath": "file:/home/bahmni/viewSql/CAR_NCD_register_v0.0.sql"
+    },
+    {
+      "name": "active_cohort_timeseries",
+              "sourceFilePath": "file:/home/bahmni/viewSql/CAR_active_cohort_timeseries_v0.0.sql"
+    },
+    {
+      "name": "diagnosis",
+              "sourceFilePath": "file:/home/bahmni/viewSql/CAR_diagnosis_v0.0.sql"
+    },
+    {
+      "name": "patient_program_view",
+      "sourceFilePath": "classpath:viewSql/patientProgramView.sql"
+    },
+    {
+      "name": "patient_program_state_view",
+      "sourceFilePath": "classpath:viewSql/patientProgramStateView.sql"
+    },
+    {
+      "name": "patient_visits_encounters_view",
+      "sourceFilePath": "classpath:viewSql/patientVisitsEncountersView.sql"
+    },
+    {
+      "name": "appointment_admin_panel_view",
+      "sql": "SELECT * FROM appointment_service_default LEFT OUTER JOIN service_availability_default USING (appointment_service_id, service_name)"
+    },
+    {
+      "name": "patient_details_view",
+      "sourceFilePath": "classpath:viewSql/patientDetailsView.sql"
+    },
+    {
+      "name": "patient_information_view",
+      "sourceFilePath": "classpath:viewSql/patientInformationView.sql"
+    },
+    {
+      "name": "bed_management_view",
+      "sourceFilePath": "classpath:viewSql/bedManagementView.sql"
+    },
+    {
+      "name": "bed_management_locations_view",
+      "sourceFilePath": "classpath:viewSql/locationWiseDischarge.sql"
+    },
+    {
+      "name": "patient_bed_view",
+      "sourceFilePath": "classpath:viewSql/patientBedView.sql"
+    },
+    {
+      "name": "patient_operation_theater_view",
+      "sourceFilePath": "classpath:viewSql/patientOperationTheaterView.sql"
+    },
+    {
+      "name": "patient_appointment_view",
+      "sourceFilePath": "classpath:viewSql/patientAppointmentView.sql"
+    },
+    {
+      "name": "patient_program_medication_view",
+      "sourceFilePath": "classpath:viewSql/patientProgramMedicationView.sql"
+    },
+    {
+      "name": "patient_diagnosis_condition_view",
+      "sourceFilePath": "classpath:viewSql/patientDiagnosisConditionView.sql"
+    },
+    {
+      "name": "patient_bed_tags_history_view",
+      "sourceFilePath": "classpath:viewSql/patientBedTagView.sql"
+    }
+
+  ]
+}

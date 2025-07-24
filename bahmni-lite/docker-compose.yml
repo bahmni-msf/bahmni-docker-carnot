@@ -29,8 +29,16 @@ services:
     environment:
       TZ: ${TZ}
 
+  # ECR-style deployment pattern (amman-config/malawi-config)
+  # bahmni-config:
+  #   image: ${ECR_URL}/bahmni-msf-lite/carnot-config:${CONFIG_IMAGE_TAG:?}
+  #   restart: always
+  #   volumes:
+  #     - '${CONFIG_VOLUME:?}:/usr/local/bahmni_config'
+  #   logging: *log-config
+
   bahmni-config:
-    image: 'bahmni/clinic-config:${CONFIG_IMAGE_TAG:?}'
+    image: 'carnot-config:${CONFIG_IMAGE_TAG:?}'
     volumes:
       - '${CONFIG_VOLUME:?}:/usr/local/bahmni_config'
     logging: *log-config
@@ -96,6 +104,7 @@ services:
     restart: ${RESTART_POLICY}
 
   openmrsdb:
+    platform: linux/amd64
     image: ${OPENMRS_DB_IMAGE_NAME:?}
     restart: always
     profiles: ["emr","bahmni-lite", "metabase", "bahmni-mart"]
@@ -242,7 +251,9 @@ services:
      - reports
     volumes:
      - 'bahmni-clinical-forms:/home/bahmni/clinical_forms'
-
+     - '${CONFIG_VOLUME:?}:/home/bahmni/bahmni_config'
+     - '${VIEWSQL_PATH:?}:/home/bahmni/viewSql'
+     - '${BAHMNI_MART_CONFIG_PATH:?}:/bahmni-mart/conf/bahmni-mart.json'
   bahmni-web:
     image: bahmni/bahmni-web:${BAHMNI_WEB_IMAGE_TAG:?}
     profiles: ["emr","bahmni-lite","bahmni-mart"]
@@ -433,8 +444,8 @@ volumes:
   openmrs-data:
   openmrsdbdata:
   # craterdb:
-  # bahmni-patient-images:
-  # bahmni-document-images:
+  bahmni-patient-images:
+  bahmni-document-images:
   bahmni-clinical-forms:
   # crater-app-data:
   bahmni-config:
@@ -442,7 +453,7 @@ volumes:
   mart-data:
   metabase-data:
   bahmni-lab-results:
-  # bahmni-uploaded-files:
-  # sms-token:
+  bahmni-uploaded-files:
+  sms-token:
   bahmni-queued-reports:
   reportsdbdata:
